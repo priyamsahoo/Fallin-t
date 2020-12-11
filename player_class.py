@@ -56,4 +56,4 @@ class player():
         ellipse(self.xpos, self.ypos, 50, 50)
         fill(0, 0, 0)
         textSize(30)
-        text("Score: "+str(self.score/100), 80, 40)
+        text("Score: "+str(self.score/100), width/2, 20)
