@@ -2,6 +2,17 @@ from platform_class import *
 from player_class import *
 from functions import *
 
+delay = 3000
+startOfGame = False
+
+
+# def keyPressed():
+#     startOfGame = True
+#     print(startOfGame)
+#     if (keyCode == 'B'):
+#         print("I am pressed")
+#         startOfGame = True
+
 def mousePressed():
     global platforms
     platforms = []
@@ -16,12 +27,27 @@ def setup():
     #global setup options
     size(500, 800)
     rectMode(CENTER)
+    
+    # sb = loadImage("assets\\gameover.jpg")
+    # sb.resize(width, height)
+    # background(sb)
+    
+    global atStartUp
+    atStartUp = True
+    
+    global startTimeMs
+    startTimeMs = millis()
         
-    global bg, go
+    global bg, go, sb
     bg = loadImage("assets\\background.png")
     bg.resize(width, height)
     go = loadImage("assets\\gameover.jpg")
     go.resize(width, height)
+    sb = loadImage("assets\\start.png")
+    sb.resize(width, height)
+    
+    global startOfGame
+    startOfGame = False
         
     #list of platforms
     global platforms
@@ -32,6 +58,13 @@ def setup():
     p1 = player()
     
 def draw():
+    global atStartUp
+    if (atStartUp):
+        currentTimeMs = millis()
+        startUpTimeRemaining = delay - (currentTimeMs - startTimeMs)
+        startScreen(startUpTimeRemaining)
+        atStartUp = startUpTimeRemaining > 0
+        return
     
     frameRate(30)
     background(bg)
@@ -62,8 +95,16 @@ def draw():
         textAlign(LEFT)
         noLoop()
         
-
     
-
+def startScreen(remainingTime):
+    background(sb)
+    fill(0)
+    textAlign(CENTER, CENTER)
+    textSize(40)
+    fill(240,225,48)
+    text("Welcome to Fallin't", width/2, 0.25*height/2)
+    textSize(100)
+    fill(50, 50, 50)
+    text(ceil(remainingTime / 1000.0), width/2, 1.65*height/2)
         
         
